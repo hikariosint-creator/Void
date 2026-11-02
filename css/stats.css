@@ -1,0 +1,43 @@
+/* ===== VOID — статистика и глобальный поиск (этап 5) ===== */
+
+/* --- Карточки статистики --- */
+.stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 22px; }
+.stat-grid .stat-card { padding: 14px 10px; }
+.stat-card--wide { grid-column: 1 / -1; text-align: left; padding: 14px; }
+.stat-card__sub { font-size: 12px; color: var(--text2); margin-top: 6px; overflow-wrap: anywhere; }
+.stat-card__value { font-size: 18px; font-weight: 600; margin-top: 6px; overflow-wrap: anywhere; }
+
+/* --- Панель с графиком --- */
+.panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px; margin-bottom: 22px; }
+.panel .tabs { margin-bottom: 14px; }
+
+.chart { display: grid; gap: 3px; align-items: end; }
+.chart__col { display: flex; flex-direction: column; align-items: stretch; min-width: 0;
+  padding: 0; background: none; border: 0; }
+.chart__track { height: 120px; display: flex; align-items: flex-end; }
+.chart__bar { width: 100%; background: var(--accent); min-height: 3px; transition: background .15s; }
+.chart__bar--zero { height: 2px; min-height: 2px; background: var(--border); }
+.chart__col.sel .chart__bar { background: var(--accent-hover); }
+.chart__col.sel .chart__bar--zero { background: var(--text2); }
+.chart__label { display: block; font-size: 10px; height: 18px; line-height: 18px; color: var(--text2);
+  text-align: center; white-space: nowrap; overflow: visible; }
+.chart__readout { min-height: 20px; margin-top: 10px; font-size: 13px; color: var(--text); overflow-wrap: anywhere; }
+
+/* --- Горизонтальные полосы по разделам --- */
+.hbar { display: grid; grid-template-columns: 96px 1fr 36px; align-items: center; gap: 10px;
+  margin-bottom: 12px; font-size: 14px; }
+.hbar:last-child { margin-bottom: 0; }
+.hbar__track { height: 8px; background: var(--bg2); border: 1px solid var(--border); }
+.hbar__fill { height: 100%; background: var(--accent); }
+.hbar__num { text-align: right; font-variant-numeric: tabular-nums; color: var(--text2); }
+
+.stats-note { font-size: 12px; color: var(--text2); margin: 0 0 8px; }
+
+/* --- Глобальный поиск --- */
+.search-info { font-size: 13px; color: var(--text2); min-height: 18px; margin-bottom: 12px; }
+.search-info:empty { display: none; }
+.search-group { margin-bottom: 22px; }
+.search-group__title { margin-bottom: 10px; }
+.search-group .btn--ghost { margin-top: 8px; }
+mark { background: rgba(163, 38, 50, .45); color: var(--text); padding: 0 1px; border-radius: 2px; }
