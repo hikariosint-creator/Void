@@ -1,0 +1,31 @@
+/* ===== VOID — адаптивность ===== */
+
+/* Очень маленькие экраны (до 360px) */
+@media (max-width: 360px) {
+  .hero__logo { font-size: 28px; letter-spacing: .3em; }
+  .hero__time { font-size: 38px; }
+  .stat-card__num { font-size: 22px; }
+  .stat-card__label { font-size: 10px; letter-spacing: .06em; }
+  .nav-btn { font-size: 10px; }
+  .topbar__title { display: none; }
+}
+
+/* Планшеты и широкие экраны */
+@media (min-width: 600px) {
+  .actions { grid-template-columns: 1fr 1fr; }
+  .views { padding-left: 24px; padding-right: 24px; }
+}
+
+/* Горизонтальная ориентация на телефоне */
+@media (max-height: 480px) and (orientation: landscape) {
+  :root { --nav-h: 52px; }
+  .nav-btn span { display: none; }
+  .hero { padding: 8px 0 12px; }
+  .hero__time { font-size: 30px; margin-top: 8px; }
+}
+
+/* Вне браузера (когда установлено как PWA) */
+@media (display-mode: standalone) {
+  body { overscroll-behavior: none; user-select: none; }
+  input, textarea { user-select: text; }
+}

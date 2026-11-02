@@ -1,0 +1,117 @@
+/* ===== VOID — основные стили ===== */
+:root {
+  --bg: #080808;
+  --bg2: #101010;
+  --card: #171717;
+  --border: #303030;
+  --text: #E5E5E5;
+  --text2: #858585;
+  --accent: #A32632;
+  --accent-hover: #C03945;
+  --ok: #4C8A5B;
+  --radius: 10px;
+  --nav-h: 64px;
+  --top-h: 52px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+  font-family: var(--font); font-size: 16px; line-height: 1.45;
+  -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+[hidden] { display: none !important; }
+
+.icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6;
+  stroke-linecap: square; stroke-linejoin: miter; flex: none; }
+
+.app { display: flex; flex-direction: column; height: 100%; max-width: 720px; margin: 0 auto;
+  background: var(--bg); position: relative; }
+
+/* --- Верхняя панель --- */
+.topbar { flex: none; display: flex; align-items: center; justify-content: space-between;
+  padding: calc(var(--safe-top) + 6px) 16px 6px; min-height: calc(var(--top-h) + var(--safe-top));
+  border-bottom: 1px solid var(--border); background: var(--bg); }
+.topbar__brand { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.logo { font-weight: 700; letter-spacing: .32em; color: var(--accent); font-size: 15px; }
+.topbar__title { color: var(--text2); font-size: 14px; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.icon-btn { width: 44px; height: 44px; display: grid; place-items: center; color: var(--text2); }
+.icon-btn:active { color: var(--accent-hover); }
+
+/* --- Разделы --- */
+.views { flex: 1; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
+  padding: 16px 16px calc(var(--nav-h) + var(--safe-bottom) + 24px); }
+.view { animation: fade .22s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .view { animation: none; } }
+
+/* --- Dashboard --- */
+.hero { padding: 20px 0 22px; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
+.hero__logo { font-size: 34px; font-weight: 700; letter-spacing: .4em; color: var(--text); }
+.hero__sub { font-size: 11px; letter-spacing: .28em; color: var(--accent); margin-top: 4px; }
+.hero__time { font-size: 44px; font-weight: 300; margin-top: 22px; font-variant-numeric: tabular-nums; }
+.hero__date { color: var(--text2); font-size: 14px; text-transform: capitalize; }
+.hero__greeting { margin-top: 10px; font-size: 15px; }
+
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 14px 8px; text-align: center; }
+.stat-card__num { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stat-card__label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--text2); margin-top: 2px; }
+
+.actions { display: grid; gap: 10px; margin-bottom: 24px; }
+.btn { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px;
+  padding: 0 18px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--card); transition: background .15s, border-color .15s; }
+.btn:active { border-color: var(--accent); }
+.btn--primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn--primary:active { background: var(--accent-hover); }
+
+.section-title { font-size: 12px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--text2); font-weight: 500; margin: 0 0 10px; }
+.list { display: grid; gap: 8px; }
+.list-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 12px 14px; }
+.list-item__title { font-weight: 600; overflow-wrap: anywhere; }
+.list-item__meta { color: var(--text2); font-size: 12px; margin-top: 2px; }
+
+/* --- Пустые состояния --- */
+.empty { text-align: center; padding: 36px 16px; border: 1px dashed var(--border);
+  border-radius: var(--radius); background: var(--bg2); }
+.empty__title { font-weight: 600; margin-bottom: 6px; }
+.empty__text { margin: 0; color: var(--text2); font-size: 14px; }
+
+/* --- Нижняя навигация --- */
+.bottomnav { position: absolute; left: 0; right: 0; bottom: 0; display: grid;
+  grid-template-columns: repeat(5, 1fr); background: var(--bg2); border-top: 1px solid var(--border);
+  padding-bottom: var(--safe-bottom); height: calc(var(--nav-h) + var(--safe-bottom)); z-index: 20; }
+.nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; color: var(--text2); font-size: 11px; min-width: 0; position: relative; }
+.nav-btn.active { color: var(--text); }
+.nav-btn.active::before { content: ""; position: absolute; top: 0; left: 28%; right: 28%;
+  height: 2px; background: var(--accent); }
+
+/* --- Меню «Ещё» --- */
+.sheet-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.6); z-index: 30; }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: 40; background: var(--bg2);
+  border-top: 1px solid var(--border); padding: 8px 8px calc(var(--safe-bottom) + 12px);
+  animation: slideup .2s ease; }
+@keyframes slideup { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.sheet__handle { width: 36px; height: 3px; background: var(--border); margin: 4px auto 8px; }
+.sheet__item { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 52px;
+  padding: 0 14px; border-radius: var(--radius); text-align: left; }
+.sheet__item:active { background: var(--card); color: var(--accent-hover); }
+
+/* --- Уведомления --- */
+.toasts { position: absolute; left: 12px; right: 12px; z-index: 50;
+  top: calc(var(--safe-top) + var(--top-h) + 8px); display: grid; gap: 8px; pointer-events: none; }
+.toast { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--ok);
+  border-radius: var(--radius); padding: 12px 14px; font-size: 14px; animation: fade .2s ease;
+  overflow-wrap: anywhere; }
+.toast--error { border-left-color: var(--accent-hover); }
+.toast--info { border-left-color: var(--text2); }
+
+:focus-visible { outline: 2px solid var(--accent-hover); outline-offset: 2px; }

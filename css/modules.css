@@ -1,0 +1,106 @@
+/* ===== VOID — списки, редакторы, окно подтверждения, Soundscape, Timeline ===== */
+
+:root { color-scheme: dark; } /* тёмные системные элементы: выпадающие списки, полосы прокрутки */
+
+/* Уведомления поверх редактора и окна подтверждения */
+.toasts { z-index: 80; }
+
+/* --- Панель поиска и фильтров --- */
+.toolbar { display: grid; gap: 10px; margin-bottom: 14px; }
+.toolbar__row { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+
+.input, .select { width: 100%; min-width: 0; min-height: 46px; padding: 0 12px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font: inherit; font-size: 16px; }
+.input:focus, .select:focus { outline: none; border-color: var(--accent-hover); }
+
+/* --- Переключатель вкладок (Soundscape) --- */
+.tabs { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0;
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 14px; }
+.tab { min-height: 42px; padding: 0 6px; font-size: 14px; color: var(--text2);
+  background: var(--bg2); border-right: 1px solid var(--border); }
+.tab:last-child { border-right: 0; }
+.tab.active { background: var(--card); color: var(--text); box-shadow: inset 0 -2px 0 var(--accent); }
+
+/* --- Карточки списков --- */
+.list-item--click { display: block; width: 100%; text-align: left; color: inherit; }
+.list-item--click:active { border-color: var(--accent); }
+.list-item--draft { border-style: dashed; border-color: var(--accent); }
+.list--drafts:not(:empty) { margin-bottom: 12px; }
+
+.card-cat { font-size: 10px; letter-spacing: .18em; color: var(--accent-hover); margin-bottom: 4px; }
+.card-sub { color: var(--text); font-size: 14px; margin-top: 2px; overflow-wrap: anywhere; }
+.card-snippet { color: var(--text2); font-size: 14px; margin-top: 4px; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.chip { font-size: 12px; color: var(--text2); border: 1px solid var(--border);
+  padding: 2px 8px; border-radius: 20px; overflow-wrap: anywhere; }
+
+/* Карточка с кнопкой-звездой справа */
+.card-wrap { position: relative; }
+.card-wrap > .list-item--click { padding-right: 56px; }
+.fav-btn { position: absolute; top: 4px; right: 4px; width: 44px; height: 44px;
+  display: grid; place-items: center; color: var(--text2); }
+.fav-btn .icon { width: 22px; height: 22px; }
+.fav-btn.on { color: var(--accent-hover); }
+.fav-btn.on .icon { fill: currentColor; }
+
+/* Кнопка-звезда внутри редактора */
+.fav-toggle { flex: none; display: flex; align-items: center; gap: 10px; min-height: 46px;
+  padding: 0 14px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg2); color: var(--text2); text-align: left; }
+.fav-toggle.on { color: var(--text); border-color: var(--accent); }
+.fav-toggle.on .icon { fill: var(--accent-hover); color: var(--accent-hover); }
+
+/* --- Вертикальная временная линия (Timeline) --- */
+.tl-year { font-size: 12px; letter-spacing: .24em; color: var(--text2); margin: 22px 0 8px 32px; }
+.tl-year:first-child { margin-top: 4px; }
+.tl { position: relative; list-style: none; margin: 0; padding: 0; }
+.tl::before { content: ""; position: absolute; left: 11px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.tl-item { position: relative; padding-left: 32px; margin-bottom: 12px; }
+.tl-item::before { content: ""; position: absolute; left: 6px; top: 20px; width: 11px; height: 11px;
+  background: var(--bg); border: 2px solid var(--accent); border-radius: 50%; }
+.tl-date { font-size: 12px; color: var(--accent-hover); margin-bottom: 4px; letter-spacing: .06em; }
+
+/* --- Редактор на весь экран --- */
+.editor { position: absolute; inset: 0; z-index: 60; display: flex; flex-direction: column;
+  background: var(--bg); animation: slideup .2s ease; }
+.editor__bar { flex: none; display: flex; align-items: center; gap: 8px;
+  padding: calc(var(--safe-top) + 6px) 12px 6px 4px;
+  min-height: calc(var(--top-h) + var(--safe-top)); border-bottom: 1px solid var(--border); }
+.editor__title { flex: 1; min-width: 0; color: var(--text2); font-size: 13px; letter-spacing: .1em;
+  text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.btn--small { min-height: 40px; padding: 0 16px; }
+
+.editor__body { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 10px;
+  overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
+  padding: 14px 16px calc(var(--safe-bottom) + 20px); }
+
+.editor__name, .editor__tags, .editor__line { flex: none; width: 100%; min-height: 48px; padding: 8px 0;
+  background: transparent; border: 0; border-bottom: 1px solid var(--border);
+  border-radius: 0; color: var(--text); font: inherit; font-size: 16px; }
+.editor__name { font-size: 22px; font-weight: 600; }
+.editor__name:focus, .editor__tags:focus, .editor__line:focus { outline: none; border-bottom-color: var(--accent-hover); }
+.editor__line[type="date"] { color-scheme: dark; }
+
+.editor__text { flex: 1 0 auto; width: 100%; min-height: 34vh; resize: none; padding: 6px 0;
+  background: transparent; border: 0; color: var(--text); font: inherit; font-size: 17px; line-height: 1.55; }
+.editor__text:focus { outline: none; }
+
+.editor__select { flex: none; }
+.editor__meta, .editor__status { flex: none; font-size: 12px; color: var(--text2); overflow-wrap: anywhere; }
+.editor__status:empty, .editor__meta:empty { display: none; }
+
+.btn--danger { color: #E06A75; border-color: var(--accent); }
+.btn--danger:active { background: rgba(163, 38, 50, .2); }
+.btn--ghost { background: transparent; color: var(--text2); }
+
+/* --- Окно подтверждения --- */
+.modal { position: absolute; inset: 0; z-index: 70; display: grid; place-items: center;
+  padding: 20px; background: rgba(0, 0, 0, .72); }
+.modal__box { width: 100%; max-width: 380px; background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; }
+.modal__title { margin: 0 0 8px; font-size: 18px; }
+.modal__text { margin: 0 0 18px; color: var(--text2); font-size: 14px; overflow-wrap: anywhere; }
+.modal__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
