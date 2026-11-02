@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="theme-color" content="#080808">
+  <meta name="description" content="VOID — персональная цифровая среда">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="VOID">
+  <title>VOID</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/auth.css">
+  <link rel="stylesheet" href="css/modules.css">
+  <link rel="stylesheet" href="css/stats.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- Набор иконок (статическая разметка, пользовательских данных тут нет) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></symbol>
+    <symbol id="i-journal" viewBox="0 0 24 24"><path d="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-archive" viewBox="0 0 24 24"><path d="M3 4h18v5H3zM5 9v11h14V9M10 13h4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></symbol>
+    <symbol id="i-timeline" viewBox="0 0 24 24"><path d="M12 3v18"/><circle cx="12" cy="7" r="2"/><circle cx="12" cy="17" r="2"/><path d="M14 7h6M4 17h6"/></symbol>
+    <symbol id="i-stats" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.8 6.3.7-4.7 4.3 1.3 6.2L12 17l-5.6 3 1.3-6.2L3 9.5l6.3-.7z"/></symbol>
+  </defs>
+</svg>
+
+<div id="app" class="app">
+
+  <!-- Верхняя панель -->
+  <header class="topbar">
+    <div class="topbar__brand">
+      <span class="logo">VOID</span>
+      <span class="topbar__title" id="topbar-title">Главная</span>
+    </div>
+    <button class="icon-btn" id="btn-lock" type="button" aria-label="Заблокировать">
+      <svg class="icon"><use href="#i-lock"/></svg>
+    </button>
+  </header>
+
+  <!-- Основная область с разделами -->
+  <main class="views" id="views">
+
+    <!-- DASHBOARD -->
+    <section class="view" id="view-dashboard" data-title="Главная">
+      <div class="hero">
+        <div class="hero__logo">VOID</div>
+        <div class="hero__sub">PERSONAL DIGITAL ENVIRONMENT</div>
+        <div class="hero__time" id="dash-time">--:--</div>
+        <div class="hero__date" id="dash-date"></div>
+        <div class="hero__greeting" id="dash-greeting"></div>
+      </div>
+
+      <div class="grid3">
+        <div class="stat-card"><div class="stat-card__num" id="dash-count-entries">—</div><div class="stat-card__label">Записи</div></div>
+        <div class="stat-card"><div class="stat-card__num" id="dash-count-archive">—</div><div class="stat-card__label">Архив</div></div>
+        <div class="stat-card"><div class="stat-card__num" id="dash-count-events">—</div><div class="stat-card__label">События</div></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn--primary" type="button" data-action="new-entry">
+          <svg class="icon"><use href="#i-plus"/></svg><span>Новая запись</span>
+        </button>
+        <button class="btn" type="button" data-action="open-archive">
+          <svg class="icon"><use href="#i-archive"/></svg><span>Открыть архив</span>
+        </button>
+      </div>
+
+      <h2 class="section-title">Последние записи</h2>
+      <div id="dash-recent" class="list" aria-live="polite"></div>
+    </section>
+
+    <!-- Разделы, содержимое которых строят скрипты: collection.js, statistics.js, search.js, settings.js, pwa.js -->
+    <section class="view" id="view-journal" data-title="Дневник" hidden></section>
+    <section class="view" id="view-archive" data-title="Архив" hidden></section>
+    <section class="view" id="view-soundscape" data-title="Soundscape" hidden></section>
+    <section class="view" id="view-timeline" data-title="Хронология" hidden></section>
+    <section class="view" id="view-statistics" data-title="Статистика" hidden></section>
+    <section class="view" id="view-search" data-title="Поиск" hidden></section>
+    <section class="view" id="view-settings" data-title="Настройки" hidden></section>
+  </main>
+
+  <!-- Нижняя навигация -->
+  <nav class="bottomnav" aria-label="Основная навигация">
+    <button class="nav-btn" type="button" data-route="dashboard"><svg class="icon"><use href="#i-home"/></svg><span>Главная</span></button>
+    <button class="nav-btn" type="button" data-route="journal"><svg class="icon"><use href="#i-journal"/></svg><span>Дневник</span></button>
+    <button class="nav-btn" type="button" data-route="archive"><svg class="icon"><use href="#i-archive"/></svg><span>Архив</span></button>
+    <button class="nav-btn" type="button" data-route="search"><svg class="icon"><use href="#i-search"/></svg><span>Поиск</span></button>
+    <button class="nav-btn" type="button" id="btn-more" aria-haspopup="dialog"><svg class="icon"><use href="#i-more"/></svg><span>Ещё</span></button>
+  </nav>
+
+  <!-- Меню «Ещё» -->
+  <div class="sheet-backdrop" id="sheet-backdrop" hidden></div>
+  <div class="sheet" id="sheet" role="dialog" aria-label="Дополнительные разделы" hidden>
+    <div class="sheet__handle"></div>
+    <button class="sheet__item" type="button" data-route="soundscape"><svg class="icon"><use href="#i-music"/></svg><span>Soundscape</span></button>
+    <button class="sheet__item" type="button" data-route="timeline"><svg class="icon"><use href="#i-timeline"/></svg><span>Хронология</span></button>
+    <button class="sheet__item" type="button" data-route="statistics"><svg class="icon"><use href="#i-stats"/></svg><span>Статистика</span></button>
+    <button class="sheet__item" type="button" data-route="settings"><svg class="icon"><use href="#i-settings"/></svg><span>Настройки</span></button>
+  </div>
+
+  <!-- Окно подтверждения (удаление и другие опасные действия) -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="modal__box">
+      <h2 class="modal__title" id="modal-title"></h2>
+      <p class="modal__text" id="modal-text"></p>
+      <div class="modal__actions">
+        <button class="btn" id="modal-cancel" type="button">Отмена</button>
+        <button class="btn btn--primary" id="modal-ok" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Уведомления -->
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Редакторы разделов добавляются сюда скриптом collection.js -->
+</div>
+
+<!-- ЭКРАН ЗАЩИТЫ: закрывает всё приложение, пока хранилище не разблокировано. -->
+<div id="auth-screen" class="auth" role="dialog" aria-modal="true" aria-label="Доступ к VOID">
+  <div class="auth__inner">
+    <div class="auth__logo">VOID</div>
+    <div class="auth__sub">PERSONAL DIGITAL ENVIRONMENT</div>
+
+    <!-- Загрузка -->
+    <section id="auth-loading">
+      <p class="auth__note">Загрузка…</p>
+    </section>
+
+    <!-- Первая настройка -->
+    <section id="auth-setup" hidden>
+      <h1 class="auth__title">Создайте мастер-пароль</h1>
+      <p class="auth__note">Он защищает все ваши данные. Данные шифруются на этом устройстве и никуда не отправляются.</p>
+      <div class="warn">
+        <strong>Важно.</strong> Пароль нигде не хранится и не может быть восстановлен.
+        Если вы его потеряете, расшифровать данные будет невозможно. Запишите его и храните в надёжном месте.
+      </div>
+
+      <form id="setup-form" autocomplete="off" novalidate>
+        <label class="field">
+          <span>Мастер-пароль</span>
+          <input id="setup-pw" type="password" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+        </label>
+        <div class="meter"><div class="meter__bar" id="setup-meter-bar"></div></div>
+        <div class="meter__label" id="setup-meter-label"></div>
+        <p class="field__hint">Минимум 10 символов и минимум 3 типа из 4: строчные, заглавные, цифры, знаки.</p>
+
+        <label class="field">
+          <span>Повторите пароль</span>
+          <input id="setup-pw2" type="password" autocomplete="new-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+        </label>
+
+        <label class="check"><input type="checkbox" id="setup-show"><span>Показать пароль</span></label>
+        <label class="check"><input type="checkbox" id="setup-ack"><span>Я понимаю, что при потере пароля данные невозможно восстановить.</span></label>
+
+        <button class="btn btn--primary btn--block" id="setup-submit" type="submit">Создать хранилище</button>
+        <p class="auth__error" id="setup-error" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- Разблокировка -->
+    <section id="auth-unlock" hidden>
+      <h1 class="auth__title">Хранилище заблокировано</h1>
+      <p class="auth__note" id="unlock-msg"></p>
+
+      <form id="unlock-form" autocomplete="off" novalidate>
+        <label class="field">
+          <span>Мастер-пароль</span>
+          <input id="unlock-pw" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+        </label>
+        <label class="check"><input type="checkbox" id="unlock-show"><span>Показать пароль</span></label>
+        <button class="btn btn--primary btn--block" id="unlock-submit" type="submit">Разблокировать</button>
+        <p class="auth__error" id="unlock-error" role="alert"></p>
+      </form>
+      <!-- Блок «Забыли пароль?» добавляется скриптом settings.js -->
+    </section>
+
+    <!-- Критическая ошибка окружения -->
+    <section id="auth-fatal" hidden>
+      <h1 class="auth__title">VOID не может запуститься</h1>
+      <div class="warn" id="fatal-text"></div>
+      <p class="auth__note">Без этих возможностей настоящее шифрование невозможно, поэтому приложение не станет хранить данные в открытом виде.</p>
+    </section>
+  </div>
+</div>
+
+<noscript>VOID требует включённого JavaScript.</noscript>
+
+<!-- Порядок важен: криптография -> база -> авторизация -> помощники -> движок коллекций -> разделы -> статистика и поиск -> резервные копии -> настройки -> PWA -> ядро -->
+<script src="js/crypto.js"></script>
+<script src="js/database.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/collection.js"></script>
+<script src="js/journal.js"></script>
+<script src="js/archive.js"></script>
+<script src="js/soundscape.js"></script>
+<script src="js/timeline.js"></script>
+<script src="js/statistics.js"></script>
+<script src="js/search.js"></script>
+<script src="js/backup.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/pwa.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
